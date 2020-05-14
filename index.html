@@ -1,56 +1,20 @@
 <!DOCTYPE html>
 
 <head>
-    <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        path {
-            fill: none;
-        }
-
-        path.wide {
-            stroke: firebrick;
-            stroke-width: 12;
-        }
-
-        path.narrow {
-            stroke: hotpink;
-            stroke-width: 9;
-        }
-
-        #background {
-            fill: antiquewhite;
-            stroke: none;
-        }
-
-        #tiles {
-            opacity: 1;
-            transition: opacity 1s ease-in-out;
-        }
-
-        #tiles.hidden {
-            opacity: 0;
-        }
-    </style>
+    <link href="style.css" rel="stylesheet">
+    <script src="squares.js"></script>
 </head>
 
 <body>
     <svg width="100%" height="100%">
         <defs>
-            <g id="tile1">
+            <g id="square1">
                 <path class="wide" d="M 50 0 C 50 28 72 50 100 50" />
                 <path class="wide" d="M 0 50 C 28 50 50 72 50 100" />
                 <path class="narrow" d="M 50 0 C 50 28 72 50 100 50" />
                 <path class="narrow" d="M 0 50 C 28 50 50 72 50 100" />
             </g>
-            <g id="tile2">
+            <g id="square2">
                 <path class="wide" d="M 50 0 C 50 28 28 50 0 50" />
                 <path class="wide" d="M 40 100 C 40 65 65 40 100 40" />
                 <path class="wide" d="M 60 100 C 60 75 75 60 100 60" />
@@ -58,7 +22,7 @@
                 <path class="narrow" d="M 40 100 C 40 65 65 40 100 40" />
                 <path class="narrow" d="M 60 100 C 60 75 75 60 100 60" />
             </g>
-            <g id="tile3">
+            <g id="square3">
                 <path class="wide" d="M 50 0 C 50 28 72 40 100 40" />
                 <path class="wide" d="M 0 50 C 28 50 40 72 40 100" />
                 <path class="wide" d="M 60 100 C 60 75 75 60 100 60" />
@@ -66,7 +30,7 @@
                 <path class="narrow" d="M 0 50 C 28 50 40 72 40 100" />
                 <path class="narrow" d="M 60 100 C 60 75 75 60 100 60" />
             </g>
-            <g id="tile4">
+            <g id="square4">
                 <path class="wide" d="M 50 0 C 50 28 72 40 100 40" />
                 <path class="wide" d="M 0 60 C 28 60 50 72 50 100" />
                 <path class="wide" d="M 0 40 C 50 40 50 60 100 60" />
@@ -74,8 +38,7 @@
                 <path class="narrow" d="M 0 60 C 28 60 50 72 50 100" />
                 <path class="narrow" d="M 0 40 C 50 40 50 60 100 60" />
             </g>
-            <g id="tile5">
-                <!-- <rect x="0" y="0" width="1" height="1" /> -->
+            <g id="square5">
                 <path class="wide" d="M 40 100 C 40 65 65 40 100 40" />
                 <path class="wide" d="M 60 100 C 60 75 75 60 100 60" />
                 <path class="wide" d="M 40 0 C 40 25 25 40 0 40" />
@@ -85,7 +48,7 @@
                 <path class="narrow" d="M 40 0 C 40 25 25 40 0 40" />
                 <path class="narrow" d="M 60 0 C 60 35 35 60 0 60" />
             </g>
-            <g id="tile6">
+            <g id="square6">
                 <path class="wide" d="M 60 100 C 60 75 75 60 100 60" />
                 <path class="wide" d="M 40 100 C 40 75 25 60 0 60" />
                 <path class="wide" d="M 40 0 C 40 25 25 40 0 40" />
@@ -111,141 +74,31 @@
         const SVG_NS = 'http://www.w3.org/2000/svg';
         const XLINK_NS = 'http://www.w3.org/1999/xlink';
 
-        function tile(x, y, sides) {
-            let tp, angle;
-            if (sides.left) {
-                if (sides.right) {
-                    if (sides.top) {
-                        tp = randomOf(['tile5', 'tile6']);
-                        angle = randomOf([0, 90]);
-                    } else {
-                        tp = 'tile4';
-                        angle = 0;
-                    }
-                } else if (sides.top) {
-                    tp = randomOf(['tile2', 'tile3']);
-                    angle = 180;
-                } else {
-                    tp = randomOf(['tile2', 'tile3']);
-                    angle = 90;
-                }
-            } else if (sides.top) {
-                if (sides.bottom) {
-                    tp = 'tile4';
-                    angle = 90;
-                } else {
-                    tp = randomOf(['tile2', 'tile3']);
-                    angle = -90;
-                }
-            } else if (sides.right) {
-                tp = randomOf(['tile2', 'tile3']);
-                angle = 0;
-            } else {
-                tp = 'tile1';
-                angle = randomOf([0, 90]);
-            }
-
-            const tile = document.createElementNS(SVG_NS, 'use');
-            tile.setAttribute('x', x * 100);
-            tile.setAttribute('y', y * 100);
-            tile.setAttributeNS(XLINK_NS, 'xlink:href', '#' + tp);
-            tile.setAttribute('clip-path', 'url(#tile-rect)');
-            tile.setAttribute('transform', `rotate(${angle}, ${x*100 + 50}, ${y*100 + 50})`);
-            return tile;
-        }
+        let timeout_id = null;
 
         function fill_tiles() {
-            const width = Math.ceil(window.innerWidth / 100);
-            const height = Math.ceil(window.innerHeight / 100);
-
-            const side_toggles = [];
-            for (let x = 0; x < width; x++) {
-                side_toggles.push([]);
-                for (let y = 0; y < height; y++) {
-                    side_toggles[x].push({
-                        left: false,
-                        right: false,
-                        top: false,
-                        bottom: false,
-                    });
-                }
-            }
-
-            let moves = 0;
-            while (moves < width * height * 4 * 0.15) {
-                let x, y;
-                switch (Math.floor(Math.random() * 4)) {
-                    case 0:
-                        x = 0;
-                        y = Math.floor(Math.random() * height);
-                        side_toggles[x][y].left = !side_toggles[x][y].left;
-                        break;
-                    case 1:
-                        x = width - 1;
-                        y = Math.floor(Math.random() * height);
-                        side_toggles[x][y].right = !side_toggles[x][y].right;
-                        break;
-                    case 2:
-                        x = Math.floor(Math.random() * width);
-                        y = 0;
-                        side_toggles[x][y].top = !side_toggles[x][y].top;
-                        break;
-                    case 3:
-                        x = Math.floor(Math.random() * width);
-                        y = height - 1;
-                        side_toggles[x][y].bottom = !side_toggles[x][y].bottom;
-                        break;
-                }
-                while (0 <= x && x < width && 0 <= y && y < height) {
-                    moves++;
-                    switch (Math.floor(Math.random() * 4)) {
-                        case 0:
-                            side_toggles[x][y].left = !side_toggles[x][y].left;
-                            x--;
-                            if (x >= 0)
-                                side_toggles[x][y].right = !side_toggles[x][y].right;
-                            break;
-                        case 1:
-                            side_toggles[x][y].right = !side_toggles[x][y].right;
-                            x++;
-                            if (x < width)
-                                side_toggles[x][y].left = !side_toggles[x][y].left;
-                            break;
-                        case 2:
-                            side_toggles[x][y].top = !side_toggles[x][y].top;
-                            y--;
-                            if (y >= 0)
-                                side_toggles[x][y].bottom = !side_toggles[x][y].bottom;
-                            break;
-                        case 3:
-                            side_toggles[x][y].bottom = !side_toggles[x][y].bottom;
-                            y++;
-                            if (y < height)
-                                side_toggles[x][y].top = !side_toggles[x][y].top;
-                            break;
-                    }
-                }
-            }
 
             const bg = document.getElementById('background');
-            bg.setAttribute('width', width * 100);
-            bg.setAttribute('height', height * 100);
+            bg.setAttribute('width', window.innerWidth);
+            bg.setAttribute('height', window.innerHeight);
 
-            const tiles = document.getElementById('tiles');
-            tiles.innerHTML = '';
-            for (let x = 0; x < width; x++)
-                for (let y = 0; y < height; y++)
-                    tiles.appendChild(tile(x, y, side_toggles[x][y]));
+            fill_with_squares();
+
             setTimeout(function () {
                 document.getElementById('tiles').classList.remove('hidden');
-                setTimeout(function () {
+                if (timeout_id !== null) {
+                    clearTimeout(timeout_id);
+                }
+                timeout_id = setTimeout(function () {
+                    timeout_id = null;
                     document.getElementById('tiles').classList.add('hidden');
                     setTimeout(fill_tiles, 1000);
                 }, 12000);
             }, 0);
         }
 
-        setTimeout(fill_tiles, 10);
+        fill_tiles();
+        window.addEventListener('resize', fill_tiles);
     </script>
 </body>
 

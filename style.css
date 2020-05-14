@@ -1,0 +1,36 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+path {
+    fill: none;
+}
+
+path.wide {
+    stroke: firebrick;
+    stroke-width: 12;
+}
+
+path.narrow {
+    stroke: hotpink;
+    stroke-width: 9;
+}
+
+#background {
+    fill: antiquewhite;
+    stroke: none;
+}
+
+#tiles {
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+}
+
+#tiles.hidden {
+    opacity: 0;
+}
