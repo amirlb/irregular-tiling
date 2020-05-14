@@ -3,6 +3,7 @@
 <head>
     <link href="style.css" rel="stylesheet">
     <script src="squares.js"></script>
+    <script src="triangles.js"></script>
 </head>
 
 <body>
@@ -58,6 +59,29 @@
                 <path class="narrow" d="M 40 0 C 40 25 25 40 0 40" />
                 <path class="narrow" d="M 60 0 C 60 25 75 40 100 40" />
             </g>
+
+            <g id="triangle1">
+                <path class="wide" d="
+                    M 54 0 C 54 15 40 39.3 27 46.8
+                    M 48 83.2 C 61 75.7 89 75.7 102 83.2
+                    M 96 0 C 96 15 110 39.3 123 46.8" />
+                <path class="narrow" d="
+                    M 54 0 C 54 15 40 39.3 27 46.8
+                    M 48 83.2 C 61 75.7 89 75.7 102 83.2
+                    M 96 0 C 96 15 110 39.3 123 46.8" />
+            </g>
+            <g id="triangle2">
+                <path class="wide" d="
+                    M 54 0 C 54 20 76.2 19.8 123 46.8
+                    M 48 83.2 C 61 75.7 89 75.7 102 83.2" />
+                <path class="narrow" d="
+                    M 54 0 C 54 20 76.2 19.8 123 46.8
+                    M 48 83.2 C 61 75.7 89 75.7 102 83.2" />
+                <path class="wide" d="
+                    M 96 0 C 96 20 73.8 19.8 27 46.8" />
+                <path class="narrow" d="
+                    M 96 0 C 96 20 73.8 19.8 27 46.8" />
+            </g>
         </defs>
 
         <rect id="background" x="0" y="0" width="1" height="1" />
@@ -82,7 +106,8 @@
             bg.setAttribute('width', window.innerWidth);
             bg.setAttribute('height', window.innerHeight);
 
-            fill_with_squares();
+            const pattern = randomOf([fill_with_squares, fill_with_triangles]);
+            pattern();
 
             setTimeout(function () {
                 document.getElementById('tiles').classList.remove('hidden');
@@ -97,7 +122,7 @@
             }, 0);
         }
 
-        setTimeout(function() {
+        setTimeout(function () {
             fill_tiles();
             window.addEventListener('resize', fill_tiles);
         }, 10);

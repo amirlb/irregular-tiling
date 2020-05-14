@@ -36,8 +36,7 @@ function square_tile(x, y, sides) {
     tile.setAttribute('x', x * 100);
     tile.setAttribute('y', y * 100);
     tile.setAttributeNS(XLINK_NS, 'xlink:href', '#' + tp);
-    tile.setAttribute('clip-path', 'url(#tile-rect)');
-    tile.setAttribute('transform', `rotate(${angle}, ${x*100 + 50}, ${y*100 + 50})`);
+    tile.setAttribute('transform', `rotate(${angle}, ${x * 100 + 50}, ${y * 100 + 50})`);
     return tile;
 }
 
