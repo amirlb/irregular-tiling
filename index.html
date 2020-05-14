@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<head>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        path {
+            fill: none;
+        }
+        path.wide {
+            stroke: firebrick;
+            stroke-width: 0.12;
+        }
+        path.narrow {
+            stroke: hotpink;
+            stroke-width: 0.09;
+        }
+        #tiles {
+            opacity: 1;
+            transition: opacity 1s ease-in-out;
+        }
+        #tiles.hidden {
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <svg viewBox="0 0 18 18">
+        <defs>
+            <g id="tile1">
+                <path class="wide" d="M 0.5 0 C 0.5 0.28 0.72 0.5 1 0.5" />
+                <path class="wide" d="M 0 0.5 C 0.28 0.5 0.5 0.72 0.5 1" />
+                <path class="narrow" d="M 0.5 0 C 0.5 0.28 0.72 0.5 1 0.5" />
+                <path class="narrow" d="M 0 0.5 C 0.28 0.5 0.5 0.72 0.5 1" />
+            </g>
+            <g id="tile2">
+                <path class="wide" d="M 0.5 0 C 0.5 0.28 0.28 0.5 0 0.5" />
+                <path class="wide" d="M 0.4 1 C 0.4 0.65 0.65 0.4 1 0.4" />
+                <path class="wide" d="M 0.6 1 C 0.6 0.75 0.75 0.6 1 0.6" />
+                <path class="narrow" d="M 0.5 0 C 0.5 0.28 0.28 0.5 0 0.5" />
+                <path class="narrow" d="M 0.4 1 C 0.4 0.65 0.65 0.4 1 0.4" />
+                <path class="narrow" d="M 0.6 1 C 0.6 0.75 0.75 0.6 1 0.6" />
+            </g>
+            <g id="tile3">
+                <path class="wide" d="M 0.5 0 C 0.5 0.28 0.72 0.4 1 0.4" />
+                <path class="wide" d="M 0 0.5 C 0.28 0.5 0.4 0.72 0.4 1" />
+                <path class="wide" d="M 0.6 1 C 0.6 0.75 0.75 0.6 1 0.6" />
+                <path class="narrow" d="M 0.5 0 C 0.5 0.28 0.72 0.4 1 0.4" />
+                <path class="narrow" d="M 0 0.5 C 0.28 0.5 0.4 0.72 0.4 1" />
+                <path class="narrow" d="M 0.6 1 C 0.6 0.75 0.75 0.6 1 0.6" />
+            </g>
+            <g id="tile4">
+                <path class="wide" d="M 0.5 0 C 0.5 0.28 0.72 0.4 1 0.4" />
+                <path class="wide" d="M 0 0.6 C 0.28 0.6 0.5 0.72 0.5 1" />
+                <path class="wide" d="M 0 0.4 C 0.5 0.4 0.5 0.6 1 0.6" />
+                <path class="narrow" d="M 0.5 0 C 0.5 0.28 0.72 0.4 1 0.4" />
+                <path class="narrow" d="M 0 0.6 C 0.28 0.6 0.5 0.72 0.5 1" />
+                <path class="narrow" d="M 0 0.4 C 0.5 0.4 0.5 0.6 1 0.6" />
+            </g>
+            <g id="tile5">
+                <!-- <rect x="0" y="0" width="1" height="1" /> -->
+                <path class="wide" d="M 0.4 1 C 0.4 0.65 0.65 0.4 1 0.4" />
+                <path class="wide" d="M 0.6 1 C 0.6 0.75 0.75 0.6 1 0.6" />
+                <path class="wide" d="M 0.4 0 C 0.4 0.25 0.25 0.4 0 0.4" />
+                <path class="wide" d="M 0.6 0 C 0.6 0.35 0.35 0.6 0 0.6" />
+                <path class="narrow" d="M 0.4 1 C 0.4 0.65 0.65 0.4 1 0.4" />
+                <path class="narrow" d="M 0.6 1 C 0.6 0.75 0.75 0.6 1 0.6" />
+                <path class="narrow" d="M 0.4 0 C 0.4 0.25 0.25 0.4 0 0.4" />
+                <path class="narrow" d="M 0.6 0 C 0.6 0.35 0.35 0.6 0 0.6" />
+            </g>
+            <g id="tile6">
+                <path class="wide" d="M 0.6 1 C 0.6 0.75 0.75 0.6 1 0.6" />
+                <path class="wide" d="M 0.4 1 C 0.4 0.75 0.25 0.6 0 0.6" />
+                <path class="wide" d="M 0.4 0 C 0.4 0.25 0.25 0.4 0 0.4" />
+                <path class="wide" d="M 0.6 0 C 0.6 0.25 0.75 0.4 1 0.4" />
+                <path class="narrow" d="M 0.6 1 C 0.6 0.75 0.75 0.6 1 0.6" />
+                <path class="narrow" d="M 0.4 1 C 0.4 0.75 0.25 0.6 0 0.6" />
+                <path class="narrow" d="M 0.4 0 C 0.4 0.25 0.25 0.4 0 0.4" />
+                <path class="narrow" d="M 0.6 0 C 0.6 0.25 0.75 0.4 1 0.4" />
+            </g>
+        </defs>
+
+        <rect x="0" y="0" width="18" height="18" fill="antiquewhite" stroke="none"/>
+        <g id="tiles"></g>
+    </svg>
+
+    <script>
+        "use strict";
+
+        function randomOf(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        const SVG_NS = 'http://www.w3.org/2000/svg';
+        const XLINK_NS = 'http://www.w3.org/1999/xlink';
+
+        function tile(x, y, sides) {
+            let tp, angle;
+            if (sides.left) {
+                if (sides.right) {
+                    if (sides.top) {
+                        tp = randomOf(['tile5', 'tile6']);
+                        angle = randomOf([0, 90]);
+                    } else {
+                        tp = 'tile4';
+                        angle = 0;
+                    }
+                } else if (sides.top) {
+                    tp = randomOf(['tile2', 'tile3']);
+                    angle = 180;
+                } else {
+                    tp = randomOf(['tile2', 'tile3']);
+                    angle = 90;
+                }
+            } else if (sides.top) {
+                if (sides.bottom) {
+                    tp = 'tile4';
+                    angle = 90;
+                } else {
+                    tp = randomOf(['tile2', 'tile3']);
+                    angle = -90;
+                }
+            } else if (sides.right) {
+                tp = randomOf(['tile2', 'tile3']);
+                angle = 0;
+            } else {
+                tp = 'tile1';
+                angle = randomOf([0, 90]);
+            }
+
+            const tile = document.createElementNS(SVG_NS, 'use');
+            tile.setAttribute('x', x);
+            tile.setAttribute('y', y);
+            tile.setAttributeNS(XLINK_NS, 'xlink:href', '#' + tp);
+            tile.setAttribute('transform', `rotate(${angle}, ${x + 0.5}, ${y + 0.5})`);
+            return tile;
+        }
+
+        function fill_tiles() {
+            const side_toggles = [];
+            for (let x = 0; x < 18; x++) {
+                side_toggles.push([]);
+                for (let y = 0; y < 18; y++) {
+                    side_toggles[x].push({
+                        left: false,
+                        right: false,
+                        top: false,
+                        bottom: false,
+                    });
+                }
+            }
+
+            let moves = 0;
+            while (moves < 18 * 18 * 4 * 0.15) {
+                let x, y;
+                switch (Math.floor(Math.random() * 4)) {
+                    case 0:
+                        x = 0;
+                        y = Math.floor(Math.random() * 18);
+                        side_toggles[x][y].left = !side_toggles[x][y].left;
+                        break;
+                    case 1:
+                        x = 17;
+                        y = Math.floor(Math.random() * 18);
+                        side_toggles[x][y].right = !side_toggles[x][y].right;
+                        break;
+                    case 2:
+                        x = Math.floor(Math.random() * 18);
+                        y = 0;
+                        side_toggles[x][y].top = !side_toggles[x][y].top;
+                        break;
+                    case 3:
+                        x = Math.floor(Math.random() * 18);
+                        y = 17;
+                        side_toggles[x][y].bottom = !side_toggles[x][y].bottom;
+                        break;
+                }
+                while (0 <= x && x < 18 && 0 <= y && y < 18) {
+                    moves++;
+                    switch (Math.floor(Math.random() * 4)) {
+                        case 0:
+                            side_toggles[x][y].left = !side_toggles[x][y].left;
+                            x--;
+                            if (x >= 0)
+                                side_toggles[x][y].right = !side_toggles[x][y].right;
+                            break;
+                        case 1:
+                            side_toggles[x][y].right = !side_toggles[x][y].right;
+                            x++;
+                            if (x < 18)
+                                side_toggles[x][y].left = !side_toggles[x][y].left;
+                            break;
+                        case 2:
+                            side_toggles[x][y].top = !side_toggles[x][y].top;
+                            y--;
+                            if (y >= 0)
+                                side_toggles[x][y].bottom = !side_toggles[x][y].bottom;
+                            break;
+                        case 3:
+                            side_toggles[x][y].bottom = !side_toggles[x][y].bottom;
+                            y++;
+                            if (y < 18)
+                                side_toggles[x][y].top = !side_toggles[x][y].top;
+                            break;
+                    }
+                }
+            }
+
+            const tiles = document.getElementById('tiles');
+            tiles.innerHTML = '';
+            tiles.classList.add('hidden');
+            for (let x = 0; x < 18; x++)
+                for (let y = 0; y < 18; y++)
+                    tiles.appendChild(tile(x, y, side_toggles[x][y]));
+            setTimeout(function() {document.getElementById('tiles').classList.remove('hidden');}, 0);
+            setTimeout(function() {document.getElementById('tiles').classList.add('hidden');}, 11000);
+            setTimeout(fill_tiles, 12000);
+        }
+
+        fill_tiles();
+    </script>
+</body>
+
+</html>
