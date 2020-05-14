@@ -97,8 +97,10 @@
             }, 0);
         }
 
-        fill_tiles();
-        window.addEventListener('resize', fill_tiles);
+        setTimeout(function() {
+            fill_tiles();
+            window.addEventListener('resize', fill_tiles);
+        }, 10);
     </script>
 </body>
 
