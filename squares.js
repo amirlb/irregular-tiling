@@ -35,6 +35,7 @@ function square_tile(x, y, sides) {
     const tile = document.createElementNS(SVG_NS, 'use');
     tile.setAttribute('x', x * 100);
     tile.setAttribute('y', y * 100);
+    tile.setAttribute('mask', 'url(#square-mask)');
     tile.setAttributeNS(XLINK_NS, 'xlink:href', '#' + tp);
     tile.setAttribute('transform', `rotate(${angle}, ${x * 100 + 50}, ${y * 100 + 50})`);
     return tile;

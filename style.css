@@ -9,6 +9,7 @@ body {
 
 path {
     fill: none;
+    stroke-linecap: round;
 }
 
 path.wide {

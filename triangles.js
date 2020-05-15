@@ -5,6 +5,7 @@ function triangle_tile(x, y, flipped) {
     const tile = document.createElementNS(SVG_NS, 'use');
     tile.setAttribute('x', 0);
     tile.setAttribute('y', 0);
+    tile.setAttribute('mask', 'url(#triangle-mask)');
     tile.setAttributeNS(XLINK_NS, 'xlink:href', '#' + tp);
     tile.setAttribute('transform', `translate(${x * 75 - 75}, ${y * 129.9}) translate(0, ${flipped ? 43.3 : 0}) rotate(${angle}, 75, 43.3)`);
     return tile;
