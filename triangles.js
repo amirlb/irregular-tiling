@@ -1,13 +1,14 @@
 function triangle_tile(x, y, flipped) {
     const tp = randomOf(['triangle1', 'triangle2']);
     const angle = randomOf([0, 120, 240]) + (flipped ? 60 : 0);
+    const flip_h = randomOf([1, -1]);
 
     const tile = document.createElementNS(SVG_NS, 'use');
     tile.setAttribute('x', 0);
     tile.setAttribute('y', 0);
     tile.setAttribute('mask', 'url(#triangle-mask)');
     tile.setAttributeNS(XLINK_NS, 'xlink:href', '#' + tp);
-    tile.setAttribute('transform', `translate(${x * 75 - 75}, ${y * 129.9}) translate(0, ${flipped ? 43.3 : 0}) rotate(${angle}, 75, 43.3)`);
+    tile.setAttribute('transform', `translate(${x * 75 - 75}, ${y * 129.9}) translate(75, ${flipped ? 43.3 : 0}) scale(${flip_h}, 1) rotate(${angle}, 0, 43.3) translate(-75, 0)`);
     return tile;
 }
 
