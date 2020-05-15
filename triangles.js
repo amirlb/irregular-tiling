@@ -1,5 +1,5 @@
 function triangle_tile(x, y, flipped) {
-    const tp = randomOf(['triangle1', 'triangle2']);
+    const tp = randomOf(['triangle1', 'triangle1', 'triangle1', 'triangle2', 'triangle1', 'triangle2', 'triangle3']);
     const angle = randomOf([0, 120, 240]) + (flipped ? 60 : 0);
     const flip_h = randomOf([1, -1]);
 
