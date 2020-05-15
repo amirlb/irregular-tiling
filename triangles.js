@@ -6,13 +6,13 @@ function triangle_tile(x, y, flipped) {
     tile.setAttribute('x', 0);
     tile.setAttribute('y', 0);
     tile.setAttributeNS(XLINK_NS, 'xlink:href', '#' + tp);
-    tile.setAttribute('transform', `translate(${x * 75 - 75}, ${y * 130}) translate(0, ${flipped ? 43.334 : 0}) rotate(${angle}, 75, 43.333)`);
+    tile.setAttribute('transform', `translate(${x * 75 - 75}, ${y * 129.9}) translate(0, ${flipped ? 43.3 : 0}) rotate(${angle}, 75, 43.3)`);
     return tile;
 }
 
 function fill_with_triangles() {
     const width = Math.ceil(window.innerWidth / 75) + 1;
-    const height = Math.ceil(window.innerHeight / 130);
+    const height = Math.ceil(window.innerHeight / 129.9);
 
     const tiles = document.getElementById('tiles');
     tiles.innerHTML = '';
